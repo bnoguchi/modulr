@@ -70,14 +70,14 @@ var modulr = (function(global) {
   })();
   
   function require(identifier) {
-    var fn, mod,
+    var fn, mod = _modules[key],
         id = resolveIdentifier(identifier),
         key = PREFIX + id,
-        expts = _exports[key];
+        expts;
     
-    if (!expts) {
-      _exports[key] = expts = {};
-      _modules[key] = mod = { id: id };
+    if (!mod) {
+      mod = _modules[key] = { id: id, exports: {} };
+      expts = mod.exports;
       
       fn = _factories[key];
       _dirStack.push(id.substring(0, id.lastIndexOf('/') + 1))
@@ -87,6 +87,7 @@ var modulr = (function(global) {
           fn = new Function('require', 'exports', 'module', fn);
         }
         fn(require, expts, mod);
+        if (Object.keys(expts).length > 0) mod.exports = expts;
         _dirStack.pop();
       } catch(e) {
         _dirStack.pop();
@@ -94,7 +95,7 @@ var modulr = (function(global) {
         throw e;
       }
     }
-    return expts;
+    return mod.exports;
   }
   
   function resolveIdentifier(identifier) {
