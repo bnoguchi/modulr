@@ -52,7 +52,7 @@ module Modulr
     end
 
     def identifier_valid?
-      @valid ||= terms.all? { |t| t =~ /^([a-zA-Z-]+|\.\.?)$/ }
+      @valid ||= terms.all? { |t| t =~ /^([a-zA-Z\-\d]+|\.\.?)$/ }
     end
     
     def id
@@ -66,7 +66,7 @@ module Modulr
     end
 
     def relative?
-      @relative ||= terms.first =~ /^\.\.?$/
+      @relative ||= terms.first =~ /^\.\.?|[^\/]$/
     end
 
     def top_level?

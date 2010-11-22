@@ -20,7 +20,7 @@ module Modulr
       nodes.map { |node| normalize(node) }
     end
     
-    private                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+    private 
       def parser
         @parser ||= RKelly::Parser.new
       end
