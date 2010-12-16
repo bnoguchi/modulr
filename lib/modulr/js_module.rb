@@ -91,7 +91,7 @@ module Modulr
     def identifier_valid?
       @valid ||= terms.all? { |t| t =~ /^([a-zA-Z\-\d]+|\.\.?)$/ }
     end
-    
+   
     def id
       return @id if @id
       

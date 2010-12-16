@@ -37,15 +37,17 @@ var require = (function() {
       , expts = mod.exports;
     _contexts.push(_currDir = id.substring(0, id.lastIndexOf('/') + 1))
     try {
-      if (!fn) { throw 'Can\'t find module "' + identifier + '" ' + id + '.'; }
+      if (!fn) { throw 'Can\'t find module "' + identifier + '" keyed as "' + id + '".'; }
       if (typeof fn === 'string') {
         fn = new Function('require', 'exports', 'module', fn);
       }
       fn(require, expts, mod);
       if (Object.keys(expts).length) mod.exports = expts;
       _contexts.pop();
+      _currDir = _contexts[_contexts.length-1];
     } catch(e) {
       _contexts.pop();
+      _currDir = _contexts[_contexts.length-1];
       // We'd use a finally statement here if it wasn't for IE.
       throw e;
     }
@@ -80,29 +82,6 @@ var require = (function() {
       }
     }
     return path.join('/');
-
-//    var dir, parts, part, path;
-//    
-//    if (identifier.charAt(0) === '.') { // If we're referencing a relative module
-//      return identifier;
-//    }
-//    dir = _dirStack[_dirStack.length - 1];
-//    parts = (dir + identifier).split('/');
-//    path = [];
-//    for (var i = 0, length = parts.length; i < length; i++) {
-//      part = parts[i];
-//      switch (part) {
-//        case '':
-//        case '.':
-//          continue;
-//        case '..':
-//          path.pop();
-//          break;
-//        default:
-//          path.push(part);
-//      }
-//    }
-//    return path.join('/');
   }
   
   function define (id2module) {
