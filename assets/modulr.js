@@ -56,10 +56,10 @@ var require = (function() {
   
   function resolveIdentifier (identifier) {
     if (identifier.charAt(0) !== '.') { // This module exists relative to PATH/
-      _contexts.push(_currDir = ['PATH', identifier, ''].join('/'));
-      return _factories[PREFIX + _currDir + 'index'] 
-        ? (_currDir + 'index')
-        : _currDir.substring(0, _currDir.length-1);
+      var dir = ['PATH', identifier, ''].join('/');
+      return _factories[PREFIX + dir + 'index'] 
+        ? (dir + 'index')
+        : dir.substring(0, dir.length-1);
     }
 
     var parts, part, path, dir;
