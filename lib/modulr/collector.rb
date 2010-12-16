@@ -8,6 +8,7 @@ module Modulr
       @lazy_eval = options[:lazy_eval]
       @modules = []
       @top_level_modules = []
+      JSModule.paths = options[:paths]
     end
     
     def to_js(buffer = '')
@@ -58,8 +59,7 @@ module Modulr
       
       def module_from_path(path)
         identifier = File.basename(path, '.js')
-        root = @root || File.dirname(path)
-        JSModule.new(identifier, root, path)
+        JSModule.new(identifier, :root => File.dirname(path), :relative => '.')
       end
       
       def add_module_from_path(path)
@@ -71,7 +71,7 @@ module Modulr
 
       def lib
         src = File.read(PATH_TO_MODULR_JS)
-        "#{src}\nvar require = modulr.require, module = require.main;\n"
+        "#{src}\n"
       end
     
       def requires

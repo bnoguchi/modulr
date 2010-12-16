@@ -19,6 +19,10 @@ opts = OptionParser.new do |opts|
   opts.on('-r', '--root=DIR', 'Set DIR as root directory. Defaults to the directory containing FILE.') do |root|
     options[:root] = root
   end
+
+  opts.on('-p', '--paths=path1:path2:...:path3', 'Set the PATH so we can include modules not inside our root path.') do |path|
+    options[:paths] = path
+  end
   
   opts.on('--lazy-eval [MODULES]', Array,
     'Enable lazy evaluation of all JS modules or of those specified by MODULES.',
