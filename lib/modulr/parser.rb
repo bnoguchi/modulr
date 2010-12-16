@@ -38,7 +38,7 @@ module Modulr
         # i.e., dynamic requires
         if !valid
           a = @nodes.detect { |node| (node.is_a? RKelly::Nodes::VarDeclNode) && node.name === arg.value}
-          a = a.value.value.value if a
+          a = a.value.value.value[1...-1] if a
         end
         {
           :identifier => a || (valid ? arg.value[1...-1] : nil),

@@ -20,8 +20,8 @@ opts = OptionParser.new do |opts|
     options[:root] = root
   end
 
-  opts.on('-p', '--paths=path1:path2:...:path3', 'Set the PATH so we can include modules not inside our root path.') do |path|
-    options[:paths] = path
+  opts.on('-p', '--paths=path1:path2:...:path3', 'Set the PATH so we can include modules not inside our root path.') do |paths|
+    options[:paths] = paths
   end
   
   opts.on('--lazy-eval [MODULES]', Array,

@@ -16,6 +16,10 @@ module Modulr
     def self.paths=(paths)
       @paths = paths
     end
+
+    def self.paths
+      @paths
+    end
     
     def self.parser
       @dependency_finder ||= Parser.new
@@ -30,21 +34,21 @@ module Modulr
       expressions.map do |exp|
         if exp[:identifier]
           opts = {}
-          if exp[:identifier] =~ /^./
+          if exp[:identifier] =~ /^\./
             next_identifier = File.basename(exp[:identifier])
             opts[js_module._type] = js_module.root
             opts[:relative] = File.join(js_module.relative, File.dirname(exp[:identifier]))
           else
             raise "You must specify a PATH" unless @paths
             path = nil
-            @paths.split(':').each do |p|
+            @paths.split(':').reject {|p| p == ''}.each do |p|
               poss1 = File.join(p, exp[:identifier] + '.js')
               poss2 = File.join(p, exp[:identifier], 'index.js')
               if File.exist?(poss1)
-                path = File.dirname(exp[:identifier])
+                path = File.dirname(poss1)
                 next_identifier = File.basename(exp[:identifier])
               elsif File.exist?(poss2)
-                path = exp[:identifier]
+                path = File.dirname(poss2)
                 next_identifier = 'index'
               end
             end
@@ -89,7 +93,7 @@ module Modulr
     end
 
     def identifier_valid?
-      @valid ||= terms.all? { |t| t =~ /^([a-zA-Z\-\d]+|\.\.?)$/ }
+      @valid ||= terms.all? { |t| t =~ /^([a-zA-Z\-\d_]+|\.\.?)$/ }
     end
    
     def id
@@ -121,7 +125,7 @@ module Modulr
       @id = path * '/'
     end
 
-    # TODO Remove directory and "def directory"
+    # TODO Need this?
     def path
       @path ||= File.expand_path(partial_path, directory) + '.js'
     end
@@ -152,14 +156,9 @@ module Modulr
       @dependencies ||= self.class.find_dependencies(self)
     end
     
-    def dependency_array
-      '[' << dependencies.map { |d| "'#{d.id}'" }.join(', ') << ']'
-    end
-    
     def ensure(buffer = '')
       fn = "function() {\n#{src}\n}"
       buffer << "\nrequire.ensure(#{fn});\n"
-#      buffer << "\nrequire.ensure(#{dependency_array}, #{fn});\n"
     end
 
     protected
@@ -167,6 +166,7 @@ module Modulr
         File.join(*terms)
       end
       
+      # TODO Need this?
       def directory
         relative? ? File.dirname(file) : root
       end
