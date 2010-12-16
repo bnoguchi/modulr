@@ -45,14 +45,16 @@ module Modulr
               poss1 = File.join(p, exp[:identifier] + '.js')
               poss2 = File.join(p, exp[:identifier], 'index.js')
               if File.exist?(poss1)
-                path = File.dirname(poss1)
-                next_identifier = File.basename(exp[:identifier])
+                next_identifier = exp[:identifier]
+                path = p
                 opts[:relative] = '.'
+                break
               elsif File.exist?(poss2)
-                path = File.dirname(poss2)
-                next_identifier = File.basename(poss2, '.js')
-                opts[:relative] = File.basename(path)
-                path = File.dirname(path)
+                # path = File.dirname(poss2)
+                next_identifier = 'index' #File.join(exp[:identifier], 'index')
+                opts[:relative] = exp[:identifier]
+                path = p
+                break
               end
             end
             raise LoadModuleError.new(self) unless path
@@ -107,7 +109,7 @@ module Modulr
               when :path
                 ['PATH']
               end
-      parts << @relative.split('/') << @identifier
+      parts << @relative.split('/') << @identifier.split('/')
       parts.flatten!
       path = []
       parts.each do |part|
