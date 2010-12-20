@@ -29,15 +29,15 @@ Finally, `modulr` allows you to create handy [dependency graphs](http://modulrjs
 
 Install
 -------
-
-    $ [sudo] gem install modulr
+Install via git:
+    git clone https://github.com/bnoguchi/modulr/tree/module.exports
 
 Usage (for this module.exports branch):
 -----
 `require` and `export` modules just like you would in node.js or any other commonjs environment.
 
 Then from the command line:
-    $modulrize input.js > output.js
+    $ /path/to/modulrize input.js > output.js
 
 You can require commonjs modules relative to the current file's directory:
     var siblingModule = require('./relativeModule')
@@ -47,7 +47,14 @@ You can require commonjs modules relative to the current file's directory:
 You can also require npm modules that aren't easily referenced by your current file's directory because these modules live somewhere in your PATH.  In this case, you don't need to change anything in your requires, which will still look like:
     var npmModule = require('some_npm_module'); // Notice the lack of '.' or '..' prefix
 To support npm or modules found in your path, you must add the `--paths` option to your call to the `modulrize` command.
-    modulrize --paths=/usr/local/lib/node/ input.js > output.js
+    $ /path/to/modulrize --paths=/usr/local/lib/node/ input.js > output.js
+
+(IGNORE EVERYTHING BELOW THIS LINE IF YOU ARE USING MY BRANCH.)
+
+Install
+-------
+
+    $ [sudo] gem install modulr
 
 Usage
 -----
