@@ -97,7 +97,7 @@ module Modulr
     end
 
     def identifier_valid?
-      @valid ||= terms.all? { |t| t =~ /^([a-zA-Z\-\d_]+|\.\.?)$/ }
+      @valid ||= terms.all? { |t| t =~ /^([a-zA-Z\-\d_][a-zA-Z\-\d_\.]*|\.\.?)$/ }
     end
    
     def id
