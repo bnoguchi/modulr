@@ -37,7 +37,7 @@ module Modulr
           if exp[:identifier] =~ /^\.\.?\//
             next_identifier = File.basename(exp[:identifier])
             opts[js_module._type] = js_module.root
-            opts[:relative] = File.join(js_module.relative, File.dirname(exp[:identifier]))
+            opts[:relative] = File.join(js_module.relative, File.dirname(js_module.identifier), File.dirname(exp[:identifier]))
           else
             raise "You must specify a PATH" unless @paths
             path = nil
