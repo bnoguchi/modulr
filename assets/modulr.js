@@ -1,8 +1,11 @@
 var require = (function() {
-  var _keys = Object.keys || function(obj) {
-        if (_.isArray(obj)) return _.range(0, obj.length);
+  var _isArray = Array.isArray || function(obj) {
+        return !!(obj && obj.concat && obj.unshift && !obj.callee);
+      }
+    , _keys = Object.keys || function(obj) {
+        if (_isArray(obj)) return _.range(0, obj.length);
         var keys = [];
-        for (var key in obj) if (hasOwnProperty.call(obj, key)) keys[keys.length] = key;
+        for (var key in obj) if (Object.prototype.hasOwnProperty.call(obj, key)) keys[keys.length] = key;
         return keys;
       }
     , _dependencyGraph = {}
