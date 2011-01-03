@@ -1,5 +1,11 @@
 var require = (function() {
-  var _dependencyGraph = {}
+  var _keys = Object.keys || function(obj) {
+        if (_.isArray(obj)) return _.range(0, obj.length);
+        var keys = [];
+        for (var key in obj) if (hasOwnProperty.call(obj, key)) keys[keys.length] = key;
+        return keys;
+      }
+    , _dependencyGraph = {}
     , _factories = {} // Maps "ids" to factories that load its logic into a module.exports
     , _modules = {} // Maps "keys" to module objects of form {id: ..., exports: {...}}
     , _currDir
@@ -42,7 +48,7 @@ var require = (function() {
         fn = new Function('require', 'exports', 'module', fn);
       }
       fn(require, expts, mod);
-      if (Object.keys(expts).length) mod.exports = expts;
+      if (_keys(expts).length) mod.exports = expts;
       _contexts.pop();
       _currDir = _contexts[_contexts.length-1];
     } catch(e) {
