@@ -56,7 +56,7 @@ module Modulr
                 path = p
                 break
               else
-                raise "#{poss1} and #{poss2} could not be found"
+                raise "#{poss1} or #{poss2} could not be found"
               end
             end
             raise LoadModuleError.new(self) unless path
@@ -143,6 +143,7 @@ module Modulr
       if File.exist?(path)
         @src = File.read(path)
       else
+        raise "You are missing a file at #{path}"
         raise LoadModuleError.new(self)
       end
       @src.gsub!(/^#!.*/, '') # Remove shebangs to avoid JS error
