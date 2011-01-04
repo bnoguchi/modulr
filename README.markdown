@@ -31,6 +31,11 @@ Install
 -------
 Install via git:
     git clone https://github.com/bnoguchi/modulr/tree/module.exports
+    cd modulr
+    git checkout module.exports
+    cd vendor/rkelly
+    rake parser
+    cd ../..
 
 Usage (for this module.exports branch):
 -----

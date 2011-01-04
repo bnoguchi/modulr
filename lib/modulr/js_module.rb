@@ -55,6 +55,8 @@ module Modulr
                 opts[:relative] = exp[:identifier]
                 path = p
                 break
+              else
+                raise "#{poss1} and #{poss2} could not be found"
               end
             end
             raise LoadModuleError.new(self) unless path
