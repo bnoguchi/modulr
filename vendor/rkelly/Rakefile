@@ -7,7 +7,7 @@ require 'rkelly/constants'
 
 GENERATED_PARSER = "lib/rkelly/generated_parser.rb"
 
-HOE = Hoe.new('rkelly', RKelly::VERSION) do |p|
+HOE = Hoe.spec 'rkelly' do |p|
   p.developer('Aaron Patterson', 'aaronp@rubyforge.org')
   p.readme_file   = 'README.rdoc'
   p.history_file  = 'CHANGELOG.rdoc'
